@@ -1,0 +1,39 @@
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs
+*.log
+
+# IDE / editor
+.idea/
+.vscode/
+.classpath
+.project
+.settings/
+*.iml
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Env / secrets (never commit)
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.jks
+
+# Build artifacts / temp
+dist/
+build/
+tmp/
+

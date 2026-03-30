@@ -1,0 +1,36 @@
+
+@startuml
+title NetChat — Use Cases
+
+left to right direction
+
+actor "Пользователь" as User
+
+rectangle "NetChat" {
+	usecase "Запустить узел\n(задать имя)" as UCStart
+	usecase "Запустить в режиме\nожидания (listen)" as UCListen
+	usecase "Подключиться к peer\n(connect)" as UCConnect
+	usecase "Отправить сообщение" as UCSend
+	usecase "Получить сообщение" as UCRecv
+	usecase "Выйти" as UCExit
+}
+
+User --> UCStart
+User --> UCListen
+User --> UCConnect
+User --> UCSend
+User --> UCRecv
+User --> UCExit
+
+UCListen .> UCStart : <<include>>
+UCConnect .> UCStart : <<include>>
+UCSend .> UCStart : <<include>>
+UCRecv .> UCStart : <<include>>
+
+note right of UCConnect
+Если адрес peer не указан,
+узел работает только как listener.
+end note
+
+@enduml
+

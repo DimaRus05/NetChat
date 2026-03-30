@@ -1,0 +1,80 @@
+@startuml
+title NetChat — Class Diagram (target)
+
+skinparam classAttributeIconSize 0
+
+class App {
+  +main(args: String[]): void
+}
+
+class CliArgs {
+  +name: String
+  +peer: String?
+  +listen: String?
+}
+
+class ArgsParser {
+  +parse(args: String[]): CliArgs
+}
+
+class ChatNode {
+  +start(): void
+  +stop(): void
+  +broadcast(text: String): void
+  -handleIncoming(rawLine: String): void
+}
+
+class Message {
+  +type: String
+  +sender: String
+  +sentAt: OffsetDateTime
+  +text: String
+}
+
+interface MessageCodec {
+  +encode(msg: Message): String
+  +decode(line: String): Message
+}
+
+class NdjsonMessageCodec {
+  +encode(msg: Message): String
+  +decode(line: String): Message
+}
+
+class TcpServer {
+  +start(): void
+  +stop(): void
+}
+
+class TcpClient {
+  +connect(peer: InetSocketAddress): PeerConnection
+}
+
+class PeerConnection {
+  +id: String
+  +send(line: String): void
+  +close(): void
+}
+
+App --> ArgsParser
+ArgsParser --> CliArgs
+App --> ChatNode
+
+ChatNode --> TcpServer
+ChatNode --> TcpClient
+ChatNode --> PeerConnection
+
+ChatNode --> MessageCodec
+MessageCodec <|.. NdjsonMessageCodec
+
+ChatNode --> Message
+NdjsonMessageCodec --> Message
+
+note right of ChatNode
+ChatNode — фасад приложения:
+управляет подключениями,
+маршрутизирует сообщения,
+не содержит UI-логики.
+end note
+
+@enduml

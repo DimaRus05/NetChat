@@ -1,0 +1,25 @@
+
+@startuml
+title NetChat — Component Diagram
+
+skinparam componentStyle rectangle
+
+package "NetChat" {
+	[CLI\n(Console UI)] as CLI
+	[Chat Core] as Core
+	[Protocol\n(MessageCodec)] as Protocol
+	[Transport\n(TCP)] as Transport
+}
+
+CLI --> Core : user input / output
+Core --> Protocol : encode/decode
+Core --> Transport : open/close, send/receive
+Transport --> Protocol : raw bytes <-> lines
+
+note right of Protocol
+NDJSON (UTF-8) поверх TCP.
+Каждое сообщение — JSON в одной строке.
+end note
+
+@enduml
+
