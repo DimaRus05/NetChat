@@ -99,23 +99,31 @@
         <version>${spotless.version}</version>
         <configuration>
           <java>
+            <includes>
+              <include>src/main/java/**/*.java</include>
+              <include>src/test/java/**/*.java</include>
+            </includes>
             <googleJavaFormat>
               <version>1.19.2</version>
               <style>AOSP</style>
             </googleJavaFormat>
-            <target>src/**/*.java</target>
           </java>
           <pom>
-            <target>pom.xml</target>
+            <includes>
+              <include>pom.xml</include>
+            </includes>
             <sortPom>
               <expandEmptyElements>true</expandEmptyElements>
               <keepBlankLines>true</keepBlankLines>
             </sortPom>
           </pom>
           <markdown>
-            <target>README.md,doc/**/*.md</target>
-            <trimTrailingWhitespace>true</trimTrailingWhitespace>
-            <endWithNewline>true</endWithNewline>
+            <includes>
+              <include>README.md</include>
+              <include>doc/**/*.md</include>
+            </includes>
+            <trimTrailingWhitespace/>
+            <endWithNewline/>
           </markdown>
         </configuration>
         <executions>
