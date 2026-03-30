@@ -42,18 +42,6 @@
 - Проверка читаемости вывода (формат времени, имя отправителя).
 - Проверка на Windows и Linux.
 
-## 4. Чеклист тестов (что уже есть / что планируется)
-
-Отмечено по текущему состоянию ветки `feature/p2p-chat`.
-
-- [x] Unit: парсинг аргументов (`ArgsParserTest`)
-- [x] Unit: кодек NDJSON (round-trip, невалидный JSON, неподдерживаемый type, лимит длины) (`NdjsonMessageCodecTest`)
-- [x] Integration: TCP connect + send line на localhost (`TcpTransportTest`)
-- [ ] Integration: 2 узла (App/ChatNode) send/receive на localhost (сквозной тест процесса)
-- [ ] Integration: разрыв соединения не роняет процесс
-- [ ] Manual: два процесса на одной машине
-- [ ] Manual: две машины в одной сети
-
-## 5. Запуск тестов
+## 4. Запуск тестов
 
 - `mvn -B -ntp test`

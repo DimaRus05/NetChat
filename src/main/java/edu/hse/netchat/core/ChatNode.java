@@ -7,7 +7,6 @@ import edu.hse.netchat.transport.LimitedLineReader;
 import edu.hse.netchat.transport.PeerConnection;
 import edu.hse.netchat.transport.TcpClient;
 import edu.hse.netchat.transport.TcpServer;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

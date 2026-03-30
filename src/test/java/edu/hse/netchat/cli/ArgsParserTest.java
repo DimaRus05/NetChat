@@ -3,9 +3,8 @@ package edu.hse.netchat.cli;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.junit.jupiter.api.Test;
-
 import java.net.InetSocketAddress;
+import org.junit.jupiter.api.Test;
 
 class ArgsParserTest {
 
@@ -34,9 +33,12 @@ class ArgsParserTest {
         CliArgs args =
                 parser.parse(
                         new String[] {
-                            "--name", "Alice",
-                            "--listen", "0.0.0.0:9000",
-                            "--peer", "127.0.0.1:9001"
+                            "--name",
+                            "Alice",
+                            "--listen",
+                            "0.0.0.0:9000",
+                            "--peer",
+                            "127.0.0.1:9001"
                         });
 
         assertThat(args.name()).isEqualTo("Alice");

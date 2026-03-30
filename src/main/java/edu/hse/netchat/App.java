@@ -5,7 +5,6 @@ import edu.hse.netchat.cli.ArgsParserException;
 import edu.hse.netchat.cli.CliArgs;
 import edu.hse.netchat.core.ChatNode;
 import edu.hse.netchat.protocol.NdjsonMessageCodec;
-
 import java.net.InetSocketAddress;
 
 public final class App {
