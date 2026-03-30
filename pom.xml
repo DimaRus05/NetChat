@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -16,9 +14,20 @@
     <junit.version>5.10.2</junit.version>
     <assertj.version>3.25.3</assertj.version>
     <spotless.version>2.43.0</spotless.version>
+    <jackson.version>2.17.1</jackson.version>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>${jackson.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -37,6 +46,43 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.4.2</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>edu.hse.netchat.App</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <finalName>netchat</finalName>
+              <shadedArtifactAttached>false</shadedArtifactAttached>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>edu.hse.netchat.App</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
         <configuration>
@@ -50,32 +96,40 @@
         <version>${spotless.version}</version>
         <configuration>
           <java>
+            <includes>
+              <include>src/main/java/**/*.java</include>
+              <include>src/test/java/**/*.java</include>
+            </includes>
             <googleJavaFormat>
               <version>1.19.2</version>
               <style>AOSP</style>
             </googleJavaFormat>
-            <target>src/**/*.java</target>
           </java>
           <pom>
-            <target>pom.xml</target>
+            <includes>
+              <include>pom.xml</include>
+            </includes>
             <sortPom>
               <expandEmptyElements>true</expandEmptyElements>
               <keepBlankLines>true</keepBlankLines>
             </sortPom>
           </pom>
           <markdown>
-            <target>README.md,doc/**/*.md</target>
-            <trimTrailingWhitespace>true</trimTrailingWhitespace>
-            <endWithNewline>true</endWithNewline>
+            <includes>
+              <include>README.md</include>
+              <include>doc/**/*.md</include>
+            </includes>
+            <trimTrailingWhitespace></trimTrailingWhitespace>
+            <endWithNewline></endWithNewline>
           </markdown>
         </configuration>
         <executions>
           <execution>
             <id>spotless-check</id>
-            <phase>verify</phase>
             <goals>
               <goal>check</goal>
             </goals>
+            <phase>verify</phase>
           </execution>
         </executions>
       </plugin>
@@ -86,15 +140,15 @@
         <version>4.8.6.6</version>
         <configuration>
           <effort>Max</effort>
-          <threshold>Low</threshold>
+          <threshold>High</threshold>
         </configuration>
         <executions>
           <execution>
             <id>spotbugs-check</id>
-            <phase>verify</phase>
             <goals>
               <goal>check</goal>
             </goals>
+            <phase>verify</phase>
           </execution>
         </executions>
       </plugin>
@@ -134,10 +188,10 @@
             <executions>
               <execution>
                 <id>spotless-apply</id>
-                <phase>none</phase>
                 <goals>
                   <goal>apply</goal>
                 </goals>
+                <phase>none</phase>
               </execution>
             </executions>
           </plugin>
