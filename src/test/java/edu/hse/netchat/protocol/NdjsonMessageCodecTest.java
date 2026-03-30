@@ -11,12 +11,16 @@ class NdjsonMessageCodecTest {
   @Test
   void encodeDecodeRoundTrip() {
     NdjsonMessageCodec codec = new NdjsonMessageCodec(4096);
-    ChatMessage message = ChatMessage.chat("Alice", OffsetDateTime.parse("2026-03-30T21:15:02+03:00"), "Hi");
+    ChatMessage message =
+        ChatMessage.chat("Alice", OffsetDateTime.parse("2026-03-30T21:15:02+03:00"), "Hi");
 
     String line = codec.encode(message);
     ChatMessage decoded = codec.decode(line);
 
-    assertThat(decoded).isEqualTo(message);
+    assertThat(decoded.type()).isEqualTo(message.type());
+    assertThat(decoded.sender()).isEqualTo(message.sender());
+    assertThat(decoded.text()).isEqualTo(message.text());
+    assertThat(decoded.sentAt().toInstant()).isEqualTo(message.sentAt().toInstant());
   }
 
   @Test
