@@ -4,5 +4,5 @@ import java.time.OffsetDateTime;
 
 @FunctionalInterface
 public interface TimeProvider {
-  OffsetDateTime now();
+    OffsetDateTime now();
 }

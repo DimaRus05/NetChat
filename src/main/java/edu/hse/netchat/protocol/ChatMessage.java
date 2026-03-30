@@ -9,24 +9,24 @@ import java.time.OffsetDateTime;
  */
 public record ChatMessage(String type, String sender, OffsetDateTime sentAt, String text) {
 
-  public static final String TYPE_CHAT = "chat";
+    public static final String TYPE_CHAT = "chat";
 
-  public ChatMessage {
-    if (type == null || type.isBlank()) {
-      throw new IllegalArgumentException("type is required");
+    public ChatMessage {
+        if (type == null || type.isBlank()) {
+            throw new IllegalArgumentException("type is required");
+        }
+        if (sender == null || sender.isBlank()) {
+            throw new IllegalArgumentException("sender is required");
+        }
+        if (sentAt == null) {
+            throw new IllegalArgumentException("sentAt is required");
+        }
+        if (text == null) {
+            throw new IllegalArgumentException("text is required");
+        }
     }
-    if (sender == null || sender.isBlank()) {
-      throw new IllegalArgumentException("sender is required");
-    }
-    if (sentAt == null) {
-      throw new IllegalArgumentException("sentAt is required");
-    }
-    if (text == null) {
-      throw new IllegalArgumentException("text is required");
-    }
-  }
 
-  public static ChatMessage chat(String sender, OffsetDateTime sentAt, String text) {
-    return new ChatMessage(TYPE_CHAT, sender, sentAt, text);
-  }
+    public static ChatMessage chat(String sender, OffsetDateTime sentAt, String text) {
+        return new ChatMessage(TYPE_CHAT, sender, sentAt, text);
+    }
 }

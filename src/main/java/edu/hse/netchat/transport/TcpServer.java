@@ -9,24 +9,24 @@ import java.net.Socket;
 /** TCP server that accepts a single connection (base project scope). */
 public final class TcpServer implements Closeable {
 
-  private final ServerSocket serverSocket;
+    private final ServerSocket serverSocket;
 
-  public TcpServer(InetSocketAddress listenAddress) throws IOException {
-    this.serverSocket = new ServerSocket();
-    serverSocket.bind(listenAddress);
-  }
+    public TcpServer(InetSocketAddress listenAddress) throws IOException {
+        this.serverSocket = new ServerSocket();
+        serverSocket.bind(listenAddress);
+    }
 
-  public InetSocketAddress boundAddress() {
-    return new InetSocketAddress(serverSocket.getInetAddress(), serverSocket.getLocalPort());
-  }
+    public InetSocketAddress boundAddress() {
+        return new InetSocketAddress(serverSocket.getInetAddress(), serverSocket.getLocalPort());
+    }
 
-  public PeerConnection accept() throws IOException {
-    Socket socket = serverSocket.accept();
-    return new PeerConnection(socket);
-  }
+    public PeerConnection accept() throws IOException {
+        Socket socket = serverSocket.accept();
+        return new PeerConnection(socket);
+    }
 
-  @Override
-  public void close() throws IOException {
-    serverSocket.close();
-  }
+    @Override
+    public void close() throws IOException {
+        serverSocket.close();
+    }
 }

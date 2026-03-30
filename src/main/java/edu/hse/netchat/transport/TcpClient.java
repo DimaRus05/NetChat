@@ -7,9 +7,10 @@ import java.net.Socket;
 /** TCP client connector. */
 public final class TcpClient {
 
-  public PeerConnection connect(InetSocketAddress peerAddress, int connectTimeoutMillis) throws IOException {
-    Socket socket = new Socket();
-    socket.connect(peerAddress, connectTimeoutMillis);
-    return new PeerConnection(socket);
-  }
+    public PeerConnection connect(InetSocketAddress peerAddress, int connectTimeoutMillis)
+            throws IOException {
+        Socket socket = new Socket();
+        socket.connect(peerAddress, connectTimeoutMillis);
+        return new PeerConnection(socket);
+    }
 }
