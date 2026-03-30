@@ -53,4 +53,42 @@ class NdjsonMessageCodecTest {
                 .isInstanceOf(ProtocolException.class)
                 .hasMessageContaining("too long");
     }
+
+    @Test
+    void decodeRejectsMissingSender() {
+        NdjsonMessageCodec codec = new NdjsonMessageCodec(4096);
+
+        String line = "{\"type\":\"chat\",\"sentAt\":\"2026-03-30T21:15:02+03:00\",\"text\":\"x\"}";
+
+        assertThatThrownBy(() -> codec.decode(line)).isInstanceOf(ProtocolException.class);
+    }
+
+    @Test
+    void decodeRejectsBlankSender() {
+        NdjsonMessageCodec codec = new NdjsonMessageCodec(4096);
+
+        String line =
+                "{\"type\":\"chat\",\"sender\":\"\",\"sentAt\":\"2026-03-30T21:15:02+03:00\",\"text\":\"x\"}";
+
+        assertThatThrownBy(() -> codec.decode(line)).isInstanceOf(ProtocolException.class);
+    }
+
+    @Test
+    void decodeRejectsNullText() {
+        NdjsonMessageCodec codec = new NdjsonMessageCodec(4096);
+
+        String line =
+                "{\"type\":\"chat\",\"sender\":\"Alice\",\"sentAt\":\"2026-03-30T21:15:02+03:00\",\"text\":null}";
+
+        assertThatThrownBy(() -> codec.decode(line)).isInstanceOf(ProtocolException.class);
+    }
+
+    @Test
+    void decodeRejectsNullSentAt() {
+        NdjsonMessageCodec codec = new NdjsonMessageCodec(4096);
+
+        String line = "{\"type\":\"chat\",\"sender\":\"Alice\",\"sentAt\":null,\"text\":\"x\"}";
+
+        assertThatThrownBy(() -> codec.decode(line)).isInstanceOf(ProtocolException.class);
+    }
 }

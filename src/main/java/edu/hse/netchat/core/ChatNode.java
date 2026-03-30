@@ -154,7 +154,11 @@ public final class ChatNode {
     }
 
     private void printMessage(ChatMessage message) {
+        System.out.println(formatForDisplay(message));
+    }
+
+    static String formatForDisplay(ChatMessage message) {
         String time = DISPLAY_TIME.format(message.sentAt().toLocalDateTime());
-        System.out.println("[" + time + "] " + message.sender() + ": " + message.text());
+        return "[" + time + "] " + message.sender() + ": " + message.text();
     }
 }
