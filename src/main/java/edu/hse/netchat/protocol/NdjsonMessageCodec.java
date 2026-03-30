@@ -3,6 +3,7 @@ package edu.hse.netchat.protocol;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 /** NDJSON codec (one JSON object per line). */
@@ -19,7 +20,10 @@ public final class NdjsonMessageCodec implements MessageCodec {
     this.objectMapper =
         new ObjectMapper()
             .registerModule(new JavaTimeModule())
-            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+        // Preserve original offsets/zones in ISO-8601 strings (do not coerce to mapper TZ).
+        .disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE)
+        .disable(SerializationFeature.WRITE_DATES_WITH_CONTEXT_TIME_ZONE);
   }
 
   @Override
