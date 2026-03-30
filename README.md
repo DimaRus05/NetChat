@@ -7,7 +7,7 @@
 | Документ | Содержание |
 |----------|------------|
 | [doc/architecture.md](doc/architecture.md) | Требования + архитектура + диаграммы + обоснование технологий + распределение задач |
-| [doc/testing.md](doc/testing.md) | План тестирования |
+| [doc/testing.md](doc/testing.md) | План тестирования + чеклист тестов |
 
 ## Технологии
 
@@ -33,7 +33,7 @@
 └── .gitignore
 ```
 
-## Сборка и запуск (после реализации)
+## Сборка и запуск
 
 Зависимости:
 
@@ -56,6 +56,8 @@ java -jar target/netchat.jar --help
 
 - **Ожидание подключения (server mode):** `java -jar target/netchat.jar --name Alice --listen 0.0.0.0:9000`
 - **Подключение к peer (client mode):** `java -jar target/netchat.jar --name Bob --peer 192.168.1.5:9000`
+
+Примечание: базовая версия поддерживает либо `--peer` (connect mode), либо `--listen` (server mode).
 
 Выход: команда `/exit` или EOF в stdin.
 
